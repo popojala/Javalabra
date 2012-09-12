@@ -13,11 +13,12 @@ import toistoharjoitin.Kysely;
  */
 public class KyselijaTest {
     
-    
+    Kysely kys;
 
     
     public KyselijaTest() {
     }
+    
 
     @BeforeClass
     public static void setUpClass() throws Exception {
@@ -29,16 +30,22 @@ public class KyselijaTest {
     
     @Before
     public void setUp() {
+        kys= new Kysely();
         
     }
     
     @After
     public void tearDown() {
     }
+    
     @Test
-    //public void hello(){}
-    public void lisasikoSanaparin(){
-        Kysely kys= new Kysely();
+    public void lisaakoSanan(){
+        kys.lisaaSanapari("en bil", "auto");
+        kys.lisaaSanapari("Italia", "Rooma");
+        assertEquals(2, kys.listanKoko());
+    }
+    @Test
+    public void toimiikoOikeaVastaus(){
         kys.lisaaSanapari("apina", "monkey");
         assertEquals("monkey", kys.OikeaVastaus("apina"));
     }
