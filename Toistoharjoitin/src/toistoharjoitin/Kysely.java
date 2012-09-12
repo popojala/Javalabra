@@ -5,6 +5,7 @@
 package toistoharjoitin;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.TreeMap;
 /**
  *
@@ -14,6 +15,7 @@ public class Kysely{
     private TreeMap<String, String> sanalista;
     private ArrayList<String> sanat;
     private TreeMap<String, Integer> tietamiset;
+    
     
     
     public Kysely(){
@@ -33,27 +35,40 @@ public class Kysely{
         tietamiset.put(sana, 2);
     }
     
-    
-    public int satunnainen(int ylaraja){
-        return (int)(Math.random()*(ylaraja+1));
-    }
+    //random luokasta tämä. omarandom. leikkiluokka randomille.
+    //ei ole nyt käytössä, koska teen varmaan jotenkin toisin. 
+// public int satunnainen(int ylaraja){
+  //     return 0;
+    //}
    
     
     
-    public String kysySana(){
-        return sanat.get(satunnainen(sanat.size()));
+    public String kysySana(int index){
+        return sanat.get(index);
         }
    
     public String OikeaVastaus(String sana){
         return (sanalista.get(sana));
     }
     
-    public boolean tarkastaVastaus(String sana, String vastaus){
+    public boolean tarkistaVastaus(String sana, String vastaus){
         return vastaus.equals(OikeaVastaus(sana));
     }
-    public void kirjaaTulos(String vastaus, String sana){
-        
+    public void kirjaaTulos(String sana, String vastaus){
+        if (tarkistaVastaus(sana, vastaus)){
+            tietamiset.put(sana, tietamiset.get(sana)+1);
+            System.out.println("Oikein!");
+        }
+        else {
+            tietamiset.put(sana, 0);
+            System.out.println("Oikea vastaus olisi ollut " + sanalista.get(sana));
+        }
     }
+    public int Tietamiskerrat(String sana){
+        return tietamiset.get(sana);
+    }
+        
+   
     public int listanKoko(){
         return sanalista.size();
     }
