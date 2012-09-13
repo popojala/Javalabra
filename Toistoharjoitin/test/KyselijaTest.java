@@ -57,7 +57,7 @@ public class KyselijaTest {
     @Test
    public void kysyySanaa() {
         
-        assertEquals("apina", kys.kysySana(0));
+        assertEquals("apina", kys.kysySana());
    }
 
     @Test
