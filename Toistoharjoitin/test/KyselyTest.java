@@ -11,11 +11,11 @@ import toistoharjoitin.Kysely;
  *
  * @author Paavo
  */
-public class KyselijaTest {
+public class KyselyTest {
 
     Kysely kys;
 
-    public KyselijaTest() {
+    public KyselyTest() {
     }
 
     @BeforeClass
