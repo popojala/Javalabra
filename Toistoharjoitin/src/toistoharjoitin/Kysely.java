@@ -6,11 +6,7 @@ package toistoharjoitin;
 
 import java.io.File;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
-import java.util.Scanner;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  *
@@ -23,40 +19,102 @@ public class Kysely {
     private TreeMap<String, Integer> tietamiset;
     private int toleranssi = 3;
     private int uudelleenKysyminenVaara = 7;
+    private String tunnus;
+    private String lista;
+    private HashSet<String> kayttajanListat;
+    
 
-    public Kysely() {
+    public Kysely(String tunnus, String lista) {
         TreeMap<String, String> tyhjasanalista = new TreeMap<String, String>();
         ArrayList<String> tyhjasanat = new ArrayList<String>();
         TreeMap<String, Integer> tyhjatietamiset = new TreeMap<String, Integer>();
         this.sanalista = tyhjasanalista;
         this.sanat = tyhjasanat;
         this.tietamiset = tyhjatietamiset;
+        this.tunnus = tunnus;
+        this.lista = lista;
+        this.kayttajanListat = kayttajanListat();
+        if (kayttajanListat.contains(lista)){
+            lataaTilanne();
+        }
+        else {
+            luoTilanne();
+        }
+        
+        
 
     }
-
-    public void LueSanalista(String tiedostonimi) {
+    public HashSet<String> kayttajanListat(){
+        HashSet<String> kaytlist = new HashSet<String>();
         try {
-            Scanner lukija = new Scanner(new File(tiedostonimi));
+            Scanner lukija = new Scanner(new File(tunnus + ".txt"));
+            while (lukija.hasNextLine()){
+                String rivi = lukija.nextLine();
+                kaytlist.add(rivi);
+            }
+        }
+        catch (Exception e){
+            System.out.println("virhe kayttajalistan lataamisessa");
+        }
+        return kaytlist;
+    }
+    
+    public void luoTilanne(){
+        kayttajanListat.add(lista);
+        try {
+            Scanner lukija = new Scanner(new File(lista + ".txt"));
             while (lukija.hasNextLine()) {
                 String rivi = lukija.nextLine();
                 String[] temp;
                 temp = rivi.split(" ", 2);
-                lisaaSanapari(temp[0], temp[1]);
-
-
-
-
-
-            }
+                sanalista.put(temp[0], temp[1]);
+                tietamiset.put(temp[0], 2);
+                sanat.add(temp[0]);
+                
+ }
         } catch (Exception e) {
-            System.out.println("Virhe lataamisessa!");
+            System.out.println("Virhe luoTilanteessa!");
         }
+       // Collections.shuffle(sanat);
     }
 
-    public void lisaaSanapari(String sana, String vastine) {
-        sanalista.put(sana, vastine);
-        sanat.add(sana);
-        tietamiset.put(sana, 2);
+    public void lataaTilanne() {
+        sanalista.clear();
+        tietamiset.clear();
+        sanat.clear();
+        try {
+            Scanner lukija = new Scanner(new File(lista + ".txt"));
+            while (lukija.hasNextLine()) {
+                String rivi = lukija.nextLine();
+                String[] temp;
+                temp = rivi.split(" ", 2);
+                sanalista.put(temp[0], temp[1]);
+ }
+        } catch (Exception e) {
+            System.out.println("Virhe sanalistan lataamisessa!");
+        }
+        try {
+            Scanner lukija = new Scanner(new File(tunnus + lista + "tietamiset.txt"));
+            while (lukija.hasNextLine()) {
+                String rivi = lukija.nextLine();
+                String[] temp;
+                temp = rivi.split(" ", 2);
+                int numero = Integer.parseInt(temp[1]);
+                tietamiset.put(temp[0], numero);
+ }
+        } catch (Exception e) {
+            System.out.println("Virhe tietamisten lataamisessa!");
+        }
+         try {
+            Scanner lukija = new Scanner(new File(tunnus + lista + "sanat.txt"));
+            while (lukija.hasNextLine()) {
+                String rivi = lukija.nextLine();
+                sanat.add(rivi);
+ }
+        } catch (Exception e) {
+            System.out.println("Virhe sanojen lataamisessa lataamisessa!");
+    }
+   
     }
 
     //random luokasta tämä. omarandom. leikkiluokka randomille.
@@ -123,14 +181,48 @@ public class Kysely {
     public void tallennaTilanne() {
 //lisää se, että tämä tallentaa myös tiedon tietämismääristä
         try {
-            PrintWriter kirjoittaja = new PrintWriter(new File("sanat.txt"));
+            PrintWriter kirjoittaja = new PrintWriter(new File(tunnus + lista + "sanat.txt"));
             for (String sana : sanat) {
                 kirjoittaja.println(sana);
                 
             }
             kirjoittaja.close();
         } catch (Exception e) {
-            System.out.println("Virhe tiedoston kirjoittamisessa!");
+            System.out.println("Virhe sanat-tiedoston kirjoittamisessa!");
         }
-    }
+        try {
+            PrintWriter kirjoittaja = new PrintWriter(new File( tunnus + lista + "tietamiset.txt"));
+            for (String sana : tietamiset.keySet()) {
+                kirjoittaja.println(sana + " " + tietamiset.get(sana));
+                
+            }
+            kirjoittaja.close();
+        } catch (Exception e) {
+            System.out.println("Virhe tietamiset-tiedoston kirjoittamisessa!");
+        }
+         try {
+            PrintWriter kirjoittaja = new PrintWriter(new File( tunnus + lista + "sanalista.txt"));
+            for (String sana : sanalista.keySet()) {
+                kirjoittaja.println(sana + " " + sanalista.get(sana));
+                
+            }
+            kirjoittaja.close();
+        } catch (Exception e) {
+            System.out.println("Virhe tietamiset-tiedoston kirjoittamisessa!");
+
+        }
+         try {
+            PrintWriter kirjoittaja = new PrintWriter(new File( tunnus + ".txt"));
+            for (String lista : kayttajanListat) {
+                kirjoittaja.println(lista );
+                
+            }
+            kirjoittaja.close();
+        } catch (Exception e) {
+            System.out.println("Virhe kayttajan listojen paivittamisessa kirjoittamisessa!");
+
+        }
+       
+         }
+      
 }

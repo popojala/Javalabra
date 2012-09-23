@@ -4,6 +4,7 @@
  */
 package toistoharjoitin;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -18,9 +19,20 @@ public static Scanner input = new Scanner(System.in);
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        System.out.println("anna tunnus");
+        String tunnus = input.nextLine();
+        System.out.println("anna salasana");
+        String salasana = input.nextLine();
+        kayttajat k = new kayttajat();
+        k.rekisteroidy(tunnus, salasana);
+        Oppilas o = k.kirjaudu(tunnus, salasana);
+        ArrayList<String> kaikkilistat = o.kaikkiListatListana();
+        System.out.println(kaikkilistat);
+        System.out.println("kirjoita valitsemasi listan nimi");
+        String lista = input.nextLine();
+        Kysely kys= new Kysely(tunnus, lista);
         
-        Kysely kys= new Kysely();
-        kys.LueSanalista("sanasto.txt");
+        
         String vastaus = "";
         while (!vastaus.equals("luovutan")&& kys.sanatKoko()!=0){
         String kysyttava = kys.kysySana();

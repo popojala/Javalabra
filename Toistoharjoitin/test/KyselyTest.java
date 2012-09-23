@@ -28,56 +28,61 @@ public class KyselyTest {
 
     @Before
     public void setUp() {
-        kys = new Kysely();
-        kys.lisaaSanapari("apina", "monkey");
+        kys = new Kysely("pertti", "englanti");
+        
 
     }
 
     @After
     public void tearDown() {
     }
-
-    @Test
-    public void lisaakoSanan() {
-        kys.lisaaSanapari("en bil", "auto");
-        kys.lisaaSanapari("Italia", "Rooma");
-        assertEquals(3, kys.listanKoko());
-    }
+    
     @Test 
-    public void lisaakoTietamiset(){
-        assertEquals(2, kys.Tietamiskerrat("apina"));
+    public void luokoTilanteen(){
+        assertEquals(3, kys.sanalistanKoko());
     }
+    @Test
+    public void kysyykoSanan(){
+        assertEquals("poika", kys.kysySana());
+    }
+    @Test public void kysyykoToisenSanan(){
+        kys.kysySana();
+        assertEquals("hevonen", kys.kysySana());
+    }
+    @Test public void PoistaakoKysytyt(){
+        kys.kysySana();
+        assertEquals(2, kys.sanatKoko());
+    }
+    @Test public void TarkistaakoOikean(){
+        assertEquals(true, kys.tarkistaVastaus("hevonen", "horse") );
+    }
+    @Test public void TarkistaakoVaaran(){
+        assertEquals(false, kys.tarkistaVastaus("poika", "goy"));
+    }
+    @Test public void lisaakoVaarinVastatun(){
+        kys.kirjaaTulos("poika", "goy");
+        assertEquals(4, kys.sanatKoko());
+    }
+    @Test public void poistaakoKolmestiTiedetyn(){
+        kys.kirjaaTulos("poika", "boy");
+        assertEquals(3, kys.sanatKoko());
+    
+    }
+    @Test public void paivittaakoTietamiset(){
+        kys.kirjaaTulos("poika", "boy");
+        assertEquals(3, kys.Tietamiskerrat("poika"));
+    }
+    @Test public void nollaakoTietamiset(){
+        kys.kirjaaTulos("hevonen", "goat");
+        assertEquals(0, kys.Tietamiskerrat("hevonen"));
+    }
+    @Test public void tallentaakoJaLataako(){
+        kys.kysySana();
+        kys.kirjaaTulos("poika", "boy");
+        kys.tallennaTilanne();
+        kys.lataaTilanne();
+        assertEquals(3, kys.Tietamiskerrat("poika"));
+    }
+    }
+   
 
-    @Test
-    public void toimiikoOikeaVastaus() {
-        
-        assertEquals("monkey", kys.OikeaVastaus("apina"));
-    }
-
-    @Test
-   public void kysyySanaa() {
-        
-        assertEquals("apina", kys.kysySana());
-   }
-
-    @Test
-    public void TarkistaakoVastauksen() {
-       Assert.assertTrue(kys.tarkistaVastaus("apina", "monkey"));
-    }
-    @Test
-    public void paivittyikoOikeaTietamys(){
-        kys.kirjaaTulos("apina", "monkey");
-        assertEquals(3, kys.Tietamiskerrat("apina"));
-    }
-    @Test
-    public void paivittyikoVaaraTietamys(){
-        kys.kirjaaTulos("apina", "donkey");
-        assertEquals(0, kys.Tietamiskerrat("apina"));
-        
-    }
-    @Test 
-    public void toimiikoSanatUlos(){
-        kys.lisaaSanapari("aasi", "donkey");
-        assertEquals("apina\naasi\n", kys.sanatUlos());
-    }
-}
