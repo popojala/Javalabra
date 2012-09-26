@@ -22,13 +22,13 @@ public class Lukija {
         String tiedostonimi = listanNimi + ".txt";
         ArrayList<String> listat = new ArrayList<String>();
         try {
-            Scanner lukija = new Scanner(new File(tiedostonimi));
+            Scanner lukija = new Scanner(new File(tiedostonimi), "UTF-8");
             while (lukija.hasNextLine()) {
                 String rivi = lukija.nextLine();
                 listat.add(rivi);
             }
         } catch (Exception e) {
-            System.out.println("Virhe listan nimien lataamisessa");
+            System.out.println("Virhe listan nimoinn lataamisessa");
         }
         return listat;
     }

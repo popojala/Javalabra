@@ -39,6 +39,9 @@ public class OppilasTest {
     public void tearDown() {
         (new File("pertti.txt")).delete();
         (new File("testi.txt")).delete();
+        (new File("perttiruotsitietamiset")).delete();
+        (new File("perttiruotsisanat")).delete();
+        (new File("perttiruotsisanalista")).delete();
     }
 
     @Test

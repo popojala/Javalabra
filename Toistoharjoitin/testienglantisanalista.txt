@@ -1,0 +1,3 @@
+hevonen horse
+ihminen human
+poika boy
