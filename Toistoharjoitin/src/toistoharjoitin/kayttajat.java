@@ -6,36 +6,23 @@ package toistoharjoitin;
 
 import java.io.File;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.TreeMap;
 
 /**
- *
+ *Sisaltaa listan kayttajista ja heidan salasanoistaan.
+ * Luo oppilaan, jos kayttajatunnus vastaa salasanaa
+ * tai rekisteroi uuden oppilaan ja lisaa listaan kayttajan ja vastaavan
+ * salasanan
  * @author Paavo
  */
 public class kayttajat {
 
-    private HashMap<String, String> kayttajalista;
+    private TreeMap<String, String> kayttajalista;
 
     public kayttajat() {
-        this.kayttajalista = new HashMap<String, String>();
-        this.kayttajalista.put("tunnus", "salasana");
-        try {
-            Scanner lukija = new Scanner(new File("kayttajat.txt"));
-            while (lukija.hasNextLine()) {
-                String rivi = lukija.nextLine();
-                String[] temp;
-                temp = rivi.split(" ", 2);
-                this.kayttajalista.put(temp[0], temp[1]);
-
-
-
-
-
-            }
-        } catch (Exception e) {
-            System.out.println("Virhe lataamisessa!");
-        }
+        Lukija lukija = new Lukija();
+       this.kayttajalista =  lukija.lueTiedostoTreeMapiksiSS("kayttajat", " ");
+       
 
     }
 

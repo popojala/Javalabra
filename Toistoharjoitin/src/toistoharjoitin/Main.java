@@ -4,8 +4,9 @@
  */
 package toistoharjoitin;
 
+import java.io.File;
 import java.util.ArrayList;
-import java.util.Random;
+
 import java.util.Scanner;
 
 /**
@@ -13,7 +14,6 @@ import java.util.Scanner;
  * @author ppoojala
  */
 public class Main {
-Random r;
 public static Scanner input = new Scanner(System.in);
     /**
      * @param args the command line arguments
@@ -26,18 +26,27 @@ public static Scanner input = new Scanner(System.in);
         kayttajat k = new kayttajat();
         k.rekisteroidy(tunnus, salasana);
         Oppilas o = k.kirjaudu(tunnus, salasana);
+        ArrayList<String> omatListat = o.omatListatListana();
         ArrayList<String> kaikkilistat = o.kaikkiListatListana();
         System.out.println(kaikkilistat);
+        System.out.println("näitä olet jo kokeillut");
+        System.out.println(omatListat);
         System.out.println("kirjoita valitsemasi listan nimi");
         String lista = input.nextLine();
-        Kysely kys= new Kysely(tunnus, lista);
+        Kysely kys= o.avaaKysely(lista);
         
         
         String vastaus = "";
-        while (!vastaus.equals("luovutan")&& kys.sanatKoko()!=0){
+        while ( kys.sanatKoko()!=0){
         String kysyttava = kys.kysySana();
         System.out.println("mikä on suomeksi " + kysyttava + " ?");
         vastaus = input.nextLine();
+        if (vastaus.equals("luovutan")){
+            kys.tallennaTilanne();
+            System.out.println("Jatka pelaamista myöhemmin!");
+            return;
+            
+        }
         kys.kirjaaTulos(kysyttava, vastaus);
         
         if (kys.tarkistaVastaus(kysyttava, vastaus)){
@@ -49,6 +58,14 @@ public static Scanner input = new Scanner(System.in);
         
         
     }
-        kys.tallennaTilanne();
+        System.out.println("Olet oppinut listan " + lista);
+        omatListat.remove(lista);
+        omatListat.add(lista + " (osattu)");
+        o.tallennaListaTiedostoksi(omatListat, tunnus);
+        (new File(tunnus + lista + "tietamiset.txt")).delete();
+        (new File(tunnus + lista + "sanat.txt")).delete();
+        
+          
 }
 }
+

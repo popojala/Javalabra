@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 
+import java.io.File;
 import org.junit.*;
 import static org.junit.Assert.*;
 import toistoharjoitin.Kysely;
@@ -28,13 +29,16 @@ public class KyselyTest {
 
     @Before
     public void setUp() {
-        kys = new Kysely("pertti", "englanti");
+        kys = new Kysely("testi", "englanti");
+        kys.luoTilanne();
         
 
     }
 
     @After
     public void tearDown() {
+        (new File("testienglantitietamiset.txt")).delete();
+        (new File("testienglantisanat.txt")).delete();
     }
     
     @Test 

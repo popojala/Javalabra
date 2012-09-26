@@ -9,7 +9,11 @@ import java.io.PrintWriter;
 import java.util.*;
 
 /**
- *
+ * Sisaltaa tiedot kayttajan tunnuksesta ja listasta jota kysellaan
+ * niiden avulla avataan tallennetusta tiedostosta tilanne tai luodaan uusi tilanne
+ * jossa on kuinka monta kertaa sana on tiedetty, ja missa jarjestyksessa
+ * sanat kysytaan. 
+ * 
  * @author Paavo
  */
 public class Kysely {
@@ -21,7 +25,7 @@ public class Kysely {
     private int uudelleenKysyminenVaara = 7;
     private String tunnus;
     private String lista;
-    private HashSet<String> kayttajanListat;
+    
     
 
     public Kysely(String tunnus, String lista) {
@@ -33,34 +37,10 @@ public class Kysely {
         this.tietamiset = tyhjatietamiset;
         this.tunnus = tunnus;
         this.lista = lista;
-        this.kayttajanListat = kayttajanListat();
-        if (kayttajanListat.contains(lista)){
-            lataaTilanne();
-        }
-        else {
-            luoTilanne();
-        }
-        
-        
-
-    }
-    public HashSet<String> kayttajanListat(){
-        HashSet<String> kaytlist = new HashSet<String>();
-        try {
-            Scanner lukija = new Scanner(new File(tunnus + ".txt"));
-            while (lukija.hasNextLine()){
-                String rivi = lukija.nextLine();
-                kaytlist.add(rivi);
-            }
-        }
-        catch (Exception e){
-            System.out.println("virhe kayttajalistan lataamisessa");
-        }
-        return kaytlist;
     }
     
     public void luoTilanne(){
-        kayttajanListat.add(lista);
+        
         try {
             Scanner lukija = new Scanner(new File(lista + ".txt"));
             while (lukija.hasNextLine()) {
@@ -75,6 +55,8 @@ public class Kysely {
         } catch (Exception e) {
             System.out.println("Virhe luoTilanteessa!");
         }
+        //*Toistaiseksi shuffle pois käytöstä, että testit toimii
+        //joku pitäisi olla, että sufflaa vaan vaikka 7 ensimmäistä.
        // Collections.shuffle(sanat);
     }
 
@@ -82,46 +64,20 @@ public class Kysely {
         sanalista.clear();
         tietamiset.clear();
         sanat.clear();
-        try {
-            Scanner lukija = new Scanner(new File(lista + ".txt"));
-            while (lukija.hasNextLine()) {
-                String rivi = lukija.nextLine();
-                String[] temp;
-                temp = rivi.split(" ", 2);
-                sanalista.put(temp[0], temp[1]);
- }
-        } catch (Exception e) {
-            System.out.println("Virhe sanalistan lataamisessa!");
-        }
-        try {
-            Scanner lukija = new Scanner(new File(tunnus + lista + "tietamiset.txt"));
-            while (lukija.hasNextLine()) {
-                String rivi = lukija.nextLine();
-                String[] temp;
-                temp = rivi.split(" ", 2);
-                int numero = Integer.parseInt(temp[1]);
-                tietamiset.put(temp[0], numero);
- }
-        } catch (Exception e) {
-            System.out.println("Virhe tietamisten lataamisessa!");
-        }
-         try {
-            Scanner lukija = new Scanner(new File(tunnus + lista + "sanat.txt"));
-            while (lukija.hasNextLine()) {
-                String rivi = lukija.nextLine();
-                sanat.add(rivi);
- }
-        } catch (Exception e) {
-            System.out.println("Virhe sanojen lataamisessa lataamisessa!");
-    }
-   
-    }
+        Lukija luki = new Lukija();
+        sanat = luki.lueRivitListaksi(tunnus + lista + "sanat");
+        tietamiset = luki.lueTiedostoTreeMapiksiSI(tunnus + lista + "tietamiset", " ");
+        sanalista = luki.lueTiedostoTreeMapiksiSS(lista, " ");
+        
+   }
 
-    //random luokasta tämä. omarandom. leikkiluokka randomille.
-    //ei ole nyt käytössä, koska teen varmaan jotenkin toisin. 
-// public int satunnainen(int ylaraja){
-    //     return 0;
-    //}
+    
+/**
+ * Metodi metodi palauttaa sanat-listan indeksissä 0 sijaitsevan
+ * sanan.
+ *
+ * @return sana jota tahdotaan kysyä
+ */
     public String kysySana() {
         String sana = sanat.get(0);
         sanat.remove(0);
@@ -179,7 +135,12 @@ public class Kysely {
     }
 
     public void tallennaTilanne() {
-//lisää se, että tämä tallentaa myös tiedon tietämismääristä
+        
+        /*Miten näitä kannattaisi laittaa näitä
+         * kirjoittajajuttuja paketteihin, ja pitäisikö tämä hajoittaa? ehkä 
+         * ainakin että jokainen erikseen tallennetaan. 
+         */
+
         try {
             PrintWriter kirjoittaja = new PrintWriter(new File(tunnus + lista + "sanat.txt"));
             for (String sana : sanat) {
@@ -211,17 +172,13 @@ public class Kysely {
             System.out.println("Virhe tietamiset-tiedoston kirjoittamisessa!");
 
         }
-         try {
-            PrintWriter kirjoittaja = new PrintWriter(new File( tunnus + ".txt"));
-            for (String lista : kayttajanListat) {
-                kirjoittaja.println(lista );
-                
-            }
-            kirjoittaja.close();
-        } catch (Exception e) {
-            System.out.println("Virhe kayttajan listojen paivittamisessa kirjoittamisessa!");
-
-        }
+         /*
+          * tämä kirjoittaa käyttäjän tietoihin, että tätä listaa on yritetty. ongelma on, että kayttajanlistoihin pääsee
+          * käsiksi parhaiten oppilas-oliosta, siellä voisi kyselyn avatessa lisätä käyttäjän listoihin
+          * että tästä listasta on jo muistissa tietoja, mutta jotenkin turvallisempi olo, että
+          * muistilista lisättäisiin vasta tässä tallentamisvaiheessa, eikun eikä olekaan
+          */
+        
        
          }
       
