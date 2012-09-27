@@ -1,3 +1,0 @@
-hevonen 2
-ihminen 2
-poika 3

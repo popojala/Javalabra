@@ -18,9 +18,15 @@ import java.util.TreeMap;
  */
 public class Lukija {
 
+    
+
     public ArrayList<String> lueRivitListaksi(String listanNimi) {
         String tiedostonimi = listanNimi + ".txt";
         ArrayList<String> listat = new ArrayList<String>();
+        File tiedosto = new File(tiedostonimi);
+        if (!tiedosto.exists()){
+            return null;}
+        
         try {
             Scanner lukija = new Scanner(new File(tiedostonimi), "UTF-8");
             while (lukija.hasNextLine()) {
@@ -31,12 +37,17 @@ public class Lukija {
             System.out.println("Virhe listan nimoinn lataamisessa");
         }
         return listat;
+    
     }
     
-    public TreeMap<String, String> lueTiedostoTreeMapiksiSS(String tiedostonimi, String erotin){
+    public TreeMap<String, String> lueTiedostoTreeMapiksiSS(String listanNimi, String erotin){
         TreeMap<String, String> sanalista = new TreeMap<String, String>();
+        String tiedostonimi = listanNimi + ".txt";
+        File tiedosto = new File(tiedostonimi);
+        if (!tiedosto.exists()){
+            return null;}
         try {
-            Scanner lukija = new Scanner(new File(tiedostonimi + ".txt"));
+            Scanner lukija = new Scanner(new File(listanNimi + ".txt"));
             while (lukija.hasNextLine()) {
                 String rivi = lukija.nextLine();
                 String[] temp;
@@ -51,8 +62,11 @@ public class Lukija {
     
     public TreeMap<String, Integer> lueTiedostoTreeMapiksiSI(String tiedostonimi, String erotin){
         TreeMap<String, Integer> sanaJaNumero = new TreeMap<String, Integer>();
+        File tiedosto = new File(tiedostonimi);
+        if (!tiedosto.exists()){
+            return null;}
         try {
-            Scanner lukija = new Scanner(new File(tiedostonimi + ".txt"));
+            Scanner lukija = new Scanner(new File(tiedostonimi + ".txt", "UTF-8"));
             while (lukija.hasNextLine()) {
                 String rivi = lukija.nextLine();
                 String[] temp;
