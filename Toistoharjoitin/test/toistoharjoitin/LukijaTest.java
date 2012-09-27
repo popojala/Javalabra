@@ -39,4 +39,9 @@ public class LukijaTest {
         ArrayList<String> aakkosia = luk.lueRivitListaksi("lukijatestitiedosto");
         assertEquals("c", aakkosia.get(2));
     }
+    @Test 
+           public void ToimiikoAListlatausJosValilyonteja(){
+    ArrayList<String> aakkos = luk.lueRivitListaksi("lukijatestivalilyonti");
+    assertEquals("c d e", aakkos.get(1));
+}
 }
