@@ -32,13 +32,13 @@ public class OppilasTest {
     @Before
     public void setUp() {
         opp = new Oppilas("pertti");
-        testi = new Oppilas("testi");
+        
     }
 
     @After
     public void tearDown() {
         (new File("pertti.txt")).delete();
-        (new File("testi.txt")).delete();
+        
         (new File("perttiruotsitietamiset")).delete();
         (new File("perttiruotsisanat")).delete();
         (new File("perttiruotsisanalista")).delete();
@@ -54,7 +54,8 @@ public class OppilasTest {
 
     @Test
     public void OnkoOmatListatOikein() {
-        ArrayList<String> lista = testi.omatListatListana();
+        opp.avaaKysely("englanti");
+        ArrayList<String> lista = opp.omatListatListana();
         assertEquals("tama testi pelaa!", lista.get(1));
     }
    @Test

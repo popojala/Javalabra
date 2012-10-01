@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *Olio sisaltaa oppilaan tunnuksen, ja listan listoista joita Oppilas
  * on jo harjoitellut, ja onko päässyt ne läpi.
  * @author Paavo
- */
+ **/
 public class Oppilas {
     private ArrayList<String> omatListat;
     private ArrayList<String> kaikkiListat;
