@@ -41,6 +41,7 @@ public class KyselyTest {
     public void tearDown() {
         (new File("testienglantitietamiset.txt")).delete();
         (new File("testienglantisanat.txt")).delete();
+        (new File ("testienglantisanalista.txt")).delete();
     }
     
     @Test 
@@ -82,13 +83,26 @@ public class KyselyTest {
         kys.kirjaaTulos("hevonen", "goat");
         assertEquals(0, kys.Tietamiskerrat("hevonen"));
     }
-    @Test public void tallentaakoJaLataako(){
+    @Test public void tallentaako(){
+        kys.kysySana();
+        kys.kirjaaTulos("poika", "boy");
+        kys.tallennaTilanne();
+
+        assertTrue(new File ("testienglantitietamiset.txt").exists());
+        assertTrue(new File ("testienglantisanat.txt").exists());
+    }
+    @Test public void lataakoSanat(){
+        kys.kysySana();
+        kys.kirjaaTulos("poika", "boy");
+        kys.tallennaTilanne();
+        kys.lataaTilanne();
+        assertEquals("hevonen", kys.kysySana());
+    }
+    @Test public void lataakoTietamiset(){
         kys.kysySana();
         kys.kirjaaTulos("poika", "boy");
         kys.tallennaTilanne();
         kys.lataaTilanne();
         assertEquals(3, kys.Tietamiskerrat("poika"));
-    }
-    }
-   
-
+}
+}
