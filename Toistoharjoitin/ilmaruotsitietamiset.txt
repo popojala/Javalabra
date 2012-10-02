@@ -1,0 +1,3 @@
+auto 0
+poika 3
+tytto 3

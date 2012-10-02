@@ -42,14 +42,13 @@ public class LukijaTest {
         ArrayList<String> aakkosia = luk.lueRivitListaksi("lukijatestitiedosto");
         assertEquals("c", aakkosia.get(2));
     }
-<<<<<<< HEAD
+
     @Test 
            public void ToimiikoAListlatausJosValilyonteja(){
     ArrayList<String> aakkos = luk.lueRivitListaksi("lukijatestivalilyonti");
-    assertEquals("c d e", aakkos.get(1));
-=======
+    assertEquals("tama testi toimii!", aakkos.get(1));}
 
-    @Test
+   @Test
     public void kunTiedostoaEiOle() {
         assertEquals(null, luk.lueRivitListaksi("olematontiedosto"));
     }
@@ -60,7 +59,7 @@ public class LukijaTest {
         assertEquals("tama testi toimii!", lista.get(1));
     }
 
-    @Test
+   @Test
     public void tiedostossaSkandeja() {
         ArrayList<String> lista = luk.lueRivitListaksi("jeejee");
         assertEquals("Lasse Mårtenson", lista.get(1));
@@ -82,6 +81,8 @@ public class LukijaTest {
         TreeMap<String, String> a = luk.lueTiedostoTreeMapiksiSS("testisanalista", "-");
         assertEquals(null, a.get("poika"));
         }
+        
+        
     @Test 
     public void montaErotintaRivillaA(){
         TreeMap<String, String> a = luk.lueTiedostoTreeMapiksiSS("lukijatestivalilyonti", " ");
@@ -92,6 +93,6 @@ public class LukijaTest {
         TreeMap<String, String> a = luk.lueTiedostoTreeMapiksiSS("lukijatestivalilyonti", " ");
         assertEquals("testi toimii!", a.get("tama"));
         assertEquals("b", a.get("a"));}
->>>>>>> 8233cbbb573bfc67b0a019629ca621d875645421
+
 }
-}
+

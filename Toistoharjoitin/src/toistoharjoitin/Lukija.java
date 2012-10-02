@@ -62,7 +62,7 @@ public class Lukija {
     
     public TreeMap<String, Integer> lueTiedostoTreeMapiksiSI(String tiedostonimi, String erotin){
         TreeMap<String, Integer> sanaJaNumero = new TreeMap<String, Integer>();
-        File tiedosto = new File(tiedostonimi);
+        File tiedosto = new File(tiedostonimi + ".txt");
         if (!tiedosto.exists()){
             return null;}
         try {
