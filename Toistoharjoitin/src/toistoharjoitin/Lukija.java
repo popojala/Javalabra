@@ -18,7 +18,9 @@ import java.util.TreeMap;
  */
 public class Lukija {
 
-    
+    /**
+ * Metodi lukee tiedostosta rivit ArrayListiin
+ */
 
     public ArrayList<String> lueRivitListaksi(String listanNimi) {
         String tiedostonimi = listanNimi + ".txt";
@@ -38,7 +40,16 @@ public class Lukija {
         }
         return listat;
     
+        
     }
+    
+    /**
+     * Metodi riveittäin tiedostoa ja laittaa erottimen jälkeen olevanStringin
+     * treemapin valueksi, ja ennen erotinta esiintyvän pätkän keyksi. 
+     * @param listanNimi
+     * @param erotin
+     * @return 
+     */
     
     public TreeMap<String, String> lueTiedostoTreeMapiksiSS(String listanNimi, String erotin){
         TreeMap<String, String> sanalista = new TreeMap<String, String>();
@@ -59,6 +70,13 @@ public class Lukija {
         }
         return sanalista;
     }
+    /**
+     *  Metodi riveittäin tiedostoa ja laittaa erottimen jälkeen olevan Integerin
+     * treemapin valueksi, ja ennen erotinta esiintyvän Stringin keyksi. 
+     * @param listanNimi
+     * @param erotin
+     * @return 
+     */
     
     public TreeMap<String, Integer> lueTiedostoTreeMapiksiSI(String listanNimi, String erotin){
         TreeMap<String, Integer> sananumero = new TreeMap<String, Integer>();

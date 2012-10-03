@@ -8,7 +8,6 @@ import java.io.File;
 import java.util.ArrayList;
 import org.junit.*;
 import static org.junit.Assert.*;
-
 /**
  *
  * @author Paavo
