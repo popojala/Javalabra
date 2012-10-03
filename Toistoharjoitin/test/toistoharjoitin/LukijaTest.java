@@ -76,12 +76,12 @@ public class LukijaTest {
         TreeMap<String, String> a = luk.lueTiedostoTreeMapiksiSS("testisanalista", " ");
         assertEquals("boy", a.get("poika"));
     }
-    @Test 
+  /*  @Test 
     public void EiErotintaRivilla(){
         TreeMap<String, String> a = luk.lueTiedostoTreeMapiksiSS("testisanalista", "-");
         assertEquals(null, a.get("poika"));
         }
-        
+        */
         
     @Test 
     public void montaErotintaRivillaA(){
@@ -93,6 +93,13 @@ public class LukijaTest {
         TreeMap<String, String> a = luk.lueTiedostoTreeMapiksiSS("lukijatestivalilyonti", " ");
         assertEquals("testi toimii!", a.get("tama"));
         assertEquals("b", a.get("a"));}
-
+    @Test 
+            public void lataakoTreeMapinSIoikein(){
+        TreeMap<String, Integer> b = luk.lueTiedostoTreeMapiksiSI("testaus", " ");
+        int c = b.get("c");
+        assertEquals(3, c );
+    }
+   
+    
 }
 

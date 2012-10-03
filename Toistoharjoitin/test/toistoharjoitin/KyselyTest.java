@@ -6,6 +6,7 @@ package toistoharjoitin;
  */
 
 import java.io.File;
+import java.util.ArrayList;
 import org.junit.*;
 import static org.junit.Assert.*;
 import toistoharjoitin.Kysely;
@@ -101,8 +102,7 @@ public class KyselyTest {
     @Test public void lataakoTietamiset(){
         kys.kysySana();
         kys.kirjaaTulos("poika", "boy");
-        kys.tallennaTilanne();
-        kys.lataaTilanne();
+       
         assertEquals(3, kys.Tietamiskerrat("poika"));
 }
 }

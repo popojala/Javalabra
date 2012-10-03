@@ -12,6 +12,7 @@ mies henkilo
 olen mies
 ovaap paavo
 paavo ovaap
+poista poista
 salasana tunnus
 seka meteli
 timo timo

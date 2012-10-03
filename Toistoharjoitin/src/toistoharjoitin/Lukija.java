@@ -60,23 +60,29 @@ public class Lukija {
         return sanalista;
     }
     
-    public TreeMap<String, Integer> lueTiedostoTreeMapiksiSI(String tiedostonimi, String erotin){
-        TreeMap<String, Integer> sanaJaNumero = new TreeMap<String, Integer>();
-        File tiedosto = new File(tiedostonimi + ".txt");
+    public TreeMap<String, Integer> lueTiedostoTreeMapiksiSI(String listanNimi, String erotin){
+        TreeMap<String, Integer> sananumero = new TreeMap<String, Integer>();
+        String numero = "23";
+        int luku = Integer.parseInt(numero);
+        String tiedostonimi = listanNimi + ".txt";
+        File tiedosto = new File(tiedostonimi);
         if (!tiedosto.exists()){
             return null;}
         try {
-            Scanner lukija = new Scanner(new File(tiedostonimi + ".txt", "UTF-8"));
+            Scanner lukija = new Scanner(new File(listanNimi + ".txt"));
             while (lukija.hasNextLine()) {
                 String rivi = lukija.nextLine();
                 String[] temp;
-                temp = rivi.split(" ", 2);
-                int numero = Integer.parseInt(temp[1]);
-                sanaJaNumero.put(temp[0], numero);
+                temp = rivi.split(erotin, 2);
+                int num = nextInt(temp[1]);
+                sananumero.put(temp[0], num);
  }
         } catch (Exception e) {
             System.out.println("Virhe tietamisten lataamisessa!");
         }
-        return sanaJaNumero;
+        return sananumero;}
+
+    private int nextInt(String string) {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 }
